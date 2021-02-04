@@ -1,0 +1,39 @@
+version: '3.5'
+services:
+  db:
+   image: "mysql:5.7"
+   environment:
+     MYSQL_ROOT_PASSWORD: root
+     MYSQL_USERNAME: root
+     MYSQL_PASSWORD: root
+   ports:
+      - "3307:3306"
+   volumes:
+     - mysql-data:/var/lib/mysql
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch-oss:7.6.0
+    ports:
+      - "9200:9200"
+    environment:
+      "discovery.type": "single-node"
+      "cluster.name": "elasticsearch-rails"
+      "cluster.routing.allocation.disk.threshold_enabled": "false"
+    depends_on:
+      - db
+  api:
+    build:
+      context: .
+      dockerfile: backend.Dockerfile
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/myapp
+    env_file:
+      - development.env
+    depends_on:
+      - db
+      - elasticsearch
+    tty: true
+    stdin_open: true
+volumes:
+  mysql-data:

@@ -20,6 +20,8 @@ services:
       "cluster.routing.allocation.disk.threshold_enabled": "false"
     depends_on:
       - db
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
   api:
     build:
       context: .
@@ -37,3 +39,4 @@ services:
     stdin_open: true
 volumes:
   mysql-data:
+  elasticsearch-data:

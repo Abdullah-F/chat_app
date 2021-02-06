@@ -22,12 +22,17 @@ services:
       - db
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
+  redis:
+   image: redis
+   volumes:
+      - redis:/data
   api:
     build:
       context: .
       dockerfile: Dockerfile
     ports:
       - "5000:5000"
+    command: bundle exec rails s -b '0.0.0.0' -p 5000
     volumes:
       - .:/myapp
     env_file:
@@ -35,8 +40,23 @@ services:
     depends_on:
       - db
       - elasticsearch
+      - redis
     tty: true
     stdin_open: true
+  sidekiq:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: bundle exec sidekiq
+    volumes:
+      - .:/myapp
+    env_file:
+      - .env
+    depends_on:
+      - api
+      - db
+      - redis
 volumes:
   mysql-data:
   elasticsearch-data:
+  redis:

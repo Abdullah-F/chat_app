@@ -4,7 +4,9 @@ RSpec.describe Chats::Create, type: :service do
   describe '#execute' do
     context 'when not prevousily set in redis' do
       let(:new_chats_count) { 6 }
-      let(:topic) { build_stubbed(:subject, chats_count: 5) }
+      let(:topic) do
+        build_stubbed(:subject, chats_count: 5, token: SecureRandom.uuid)
+      end
 
       it 'returns 1 as the order of the chat' do
         expect(Subject).to receive(:find_by).and_return(topic)

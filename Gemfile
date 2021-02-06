@@ -11,6 +11,7 @@ gem 'mysql2', '>= 0.4.4', '< 0.6.0'
 gem 'puma', '~> 3.11'
 gem 'searchkick'
 gem 'sidekiq', '~> 6.1', '>= 6.1.3'
+gem 'composite_primary_keys', '~> 11.3', '>= 11.3.1'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production

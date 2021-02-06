@@ -36,6 +36,7 @@ group :development, :test do
   gem 'faker', '~> 2.14'
   gem 'rspec-rails', '~> 4.0.1'
   gem 'factory_bot_rails', '~> 6.1'
+  gem 'mock_redis'
 end
 
 group :development do

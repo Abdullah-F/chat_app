@@ -4,7 +4,7 @@ module Requests
       case body = JSON.parse(response.body)
       when Hash
         body.with_indifferent_access
-      when Array
+      when Array, Integer
         body
       end
     end

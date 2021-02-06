@@ -12,7 +12,7 @@ RSpec.describe 'subjects', type: :request do
       )
     end
 
-    context 'when not sending the name' do
+    context 'when the name is not sent' do
       it 'fails' do
         post '/subjects'
         expect(response).to have_http_status(:unprocessable_entity)

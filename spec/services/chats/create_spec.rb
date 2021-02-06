@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe Chats::Create, type: :service do
   describe '#execute' do
     context 'when not prevousily set in redis' do
-      subject { described_class.new(subject_token: topic.token) }
       let(:new_chats_count) { 6 }
       let(:topic) { build_stubbed(:subject, chats_count: 5) }
 
@@ -13,7 +12,7 @@ RSpec.describe Chats::Create, type: :service do
           command: :create_chat,
           payload: { order: new_chats_count, subject_token: topic.token }
         })
-        result = subject.execute
+        result = described_class.execute(subject_token: topic.token)
         expect(result).to be_success
         expect(RedisClient.get(topic.token).to_i).to eq(new_chats_count)
         expect(result.order).to eq(new_chats_count)
@@ -21,7 +20,6 @@ RSpec.describe Chats::Create, type: :service do
     end
 
     context 'when order is already set in redis' do
-      subject { described_class.new(subject_token: token) }
       let(:token) { "token" }
       let(:new_chats_count) { 2 }
 
@@ -32,7 +30,7 @@ RSpec.describe Chats::Create, type: :service do
           command: :create_chat,
           payload: { order: new_chats_count, subject_token: token }
         })
-        result = subject.execute
+        result = described_class.execute(subject_token: token)
         expect(result).to be_success
         expect(RedisClient.get(token).to_i).to eq(new_chats_count)
         expect(result.order).to eq(new_chats_count)

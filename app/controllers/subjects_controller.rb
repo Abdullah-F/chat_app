@@ -1,6 +1,6 @@
 class SubjectsController < ApplicationController
   def create
-    result = ::Subjects::Create.new(create_params).execute
+    result = ::Subjects::Create.execute(create_params)
     if result.success?
       render json: result.subject.as_json(except: [:id]), status: :created
     else

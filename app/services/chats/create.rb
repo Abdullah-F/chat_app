@@ -1,9 +1,5 @@
 module Chats
-  class Create
-    def initialize(params)
-      @params = params.dup
-    end
-
+  class Create < BaseService
     def execute
       order = fetch_order_from_redis
       create_chat_async(order)
@@ -11,10 +7,6 @@ module Chats
     end
 
     private
-
-    def success(result)
-      @result = OpenStruct.new(result.merge(success?: true))
-    end
 
     def fetch_order_from_redis
       if !RedisClient.exists?(redis_key)

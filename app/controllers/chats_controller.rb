@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
   def create
-    result = Chats::Create.new(params).execute
+    result = Chats::Create.execute(params)
     if result.success?
       render json: result.order, status: :ok
     else

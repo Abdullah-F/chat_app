@@ -1,9 +1,11 @@
 class SubjectsController < ApplicationController
   def create
-    subject = Subject.create(name: create_params[:name])
-    render json: subject.as_json(except: [:id]), status: :created
-  rescue ActionController::ParameterMissing => e
-    render json: { error: e.message }, status: :unprocessable_entity
+    result = ::Subjects::Create.new(create_params).execute
+    if result.success?
+      render json: result.subject.as_json(except: [:id]), status: :created
+    else
+      render json: result.error, status: :unprocessable_entity
+    end
   end
 
   private

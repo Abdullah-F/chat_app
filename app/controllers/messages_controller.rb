@@ -1,5 +1,17 @@
 class MessagesController < ApplicationController
   def create
-    render json: 1, status: :ok
+    result = Messages::Create.execute(create_params)
+    if result.success?
+      render json: result.order, status: :ok
+    else
+      render json: result.error, status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def create_params
+    params.require(:body)
+    params.permit(:body, :subject_token, :chat_order)
   end
 end

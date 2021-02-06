@@ -1,8 +1,8 @@
-module Chats
+module Messages
   class Create < BaseService
     def execute
       order = fetch_order_from_redis
-      create_chat_async(order)
+      create_message_async(order)
       success(order: order)
     rescue ActiveRecord::RecordNotFound => e
       failure(error: e.message)
@@ -12,24 +12,31 @@ module Chats
 
     def fetch_order_from_redis
       if !RedisClient.exists?(redis_key)
-        RedisClient.set(redis_key, chats_count)
+        RedisClient.set(redis_key, messages_count)
       end
       RedisClient.incr(redis_key)
     end
 
     def redis_key
+      "#{token}:#{chat_order}"
+    end
+
+    def messages_count
+      Chat.find_by!(order: chat_order, subject_token: token).messages_count
+    end
+
+    def token
       @params[:subject_token]
     end
-    alias :token :redis_key
 
-    def chats_count
-      Subject.find_by!(token: token).chats_count
+    def chat_order
+      @params[:chat_order]
     end
 
-    def create_chat_async(order)
+    def create_message_async(order)
       ChatWorker.perform_async({
-        command: :create_chat,
-        payload: { order: order, subject_token: token }
+        command: :create_message,
+        payload: { order: order, chat_order: chat_order }
       })
     end
   end

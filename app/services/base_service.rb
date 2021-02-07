@@ -15,7 +15,7 @@ class BaseService
 
     private
 
-    def success(result)
+    def success(result = {})
       @result = OpenStruct.new(result.merge(success?: true))
     end
 

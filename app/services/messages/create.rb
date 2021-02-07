@@ -36,7 +36,7 @@ module Messages
     def create_message_async(order)
       ChatWorker.perform_async({
         command: :create_message,
-        payload: { order: order, chat_order: chat_order, subject_token: token }
+        payload: @params.merge(order: order)
       })
     end
   end

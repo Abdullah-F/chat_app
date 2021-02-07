@@ -25,5 +25,13 @@ RSpec.describe 'chats', type: :request do
       get "/subjects/#{topic.token}/chats/#{chat.order}"
       expect(response).to have_http_status(:ok)
     end
+
+    context 'when not found' do
+      it 'fails' do
+        get "/subjects/#{topic.token}/chats/#{1}"
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response).to have_key(:error)
+      end
+    end
   end
 end

@@ -18,7 +18,14 @@ class ChatsController < ApplicationController
   end
 
   def show
-    chat_json = Chat.eager_load(:messages).find_by(subject_token: params[:subject_token], order: params[:order])
-    render json: chat_json, status: :ok
+    chat = Chat.eager_load(:messages).find_by!(subject_token: params[:subject_token], order: params[:order])
+    render json: chat_with_messages_json(chat), status: :ok
+  end
+
+  private
+
+  def chat_with_messages_json(chat)
+    chat.as_json(except:['id'])
+      .merge(messages: chat.messages.map{ |m| m.as_json(except: ['id']) })
   end
 end

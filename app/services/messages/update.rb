@@ -10,7 +10,7 @@ module Messages
     def update_message_async
       ChatWorker.perform_async({
         command: :update_message,
-        payload: { order: order, chat_order: chat_order, subject_token: token, body: body }
+        payload: @params
       })
     end
 

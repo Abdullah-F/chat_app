@@ -15,7 +15,6 @@ RSpec.describe 'messages', type: :request do
   end
 
   describe 'PUT messages#upate' do
-
     it 'updates a message' do
       put "/subjects/#{topic.token}/chats/#{chat.order}/messages/#{message.order}",
         :params => { :body => "new_body" }

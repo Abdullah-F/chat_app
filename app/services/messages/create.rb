@@ -22,7 +22,7 @@ module Messages
     end
 
     def messages_count
-      Chat.find([token, chat_order]).messages_count
+      Chat.find_by!(subject_token: token, order: chat_order).messages_count
     end
 
     def token

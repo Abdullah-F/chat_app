@@ -20,4 +20,13 @@ RSpec.describe 'subjects', type: :request do
       end
     end
   end
+
+  describe 'GET subjects#index' do
+    it 'returns subjects without paginations' do
+      create_list(:subject, 5, name: 'subject_name')
+      get '/subjects'
+      expect(response).to have_http_status(:ok)
+      expect(json_response.size).to eq(5)
+    end
+  end
 end

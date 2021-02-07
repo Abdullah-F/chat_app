@@ -1,6 +1,7 @@
 FactoryBot.define do
+  sequence(:order) { |n| n }
   factory :message do
-    order { 1 }
-    chat_id { 1 }
+    order
+    body { "body" }
   end
 end

@@ -23,12 +23,11 @@ ActiveRecord::Schema.define(version: 2021_02_06_170447) do
 
   create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "order", null: false
-    t.integer "chat_order", null: false
-    t.string "subject_token", null: false
+    t.integer "chat_id", null: false
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["order", "chat_order", "subject_token"], name: "index_messages_on_order_and_chat_order_and_subject_token", unique: true
+    t.index ["order", "chat_id"], name: "index_messages_on_order_and_chat_id", unique: true
   end
 
   create_table "subjects", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|

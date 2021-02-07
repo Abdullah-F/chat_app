@@ -23,7 +23,8 @@ RSpec.describe Messages::Create, type: :service do
       end
 
       it 'fetchs the order from the database' do
-        expect(Chat).to receive(:find).and_return(chat)
+        expect(Chat).to receive(:find_by!)
+          .with(subject_token: chat.subject_token, order: chat.order).and_return(chat)
         result = described_class.execute(payload.except(:order))
         expect(result).to be_success
         expect(RedisClient.get(redis_key).to_i).to eq(new_messages_count)
@@ -54,7 +55,7 @@ RSpec.describe Messages::Create, type: :service do
 
       it 'increments the order directly' do
         RedisClient.set(redis_key, 1)
-        expect(Chat).not_to receive(:find)
+        expect(Chat).not_to receive(:find_by!).with(subject_token: token, order: chat_order)
         result = described_class.execute(payload.except(:order))
         expect(result).to be_success
         expect(RedisClient.get(redis_key).to_i).to eq(new_messages_count)

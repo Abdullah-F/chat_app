@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
   end
 
   def update
-    result = Messages::Update.execute(create_params)
+    result = Messages::Update.execute(update_params)
     if result.success?
       render json: result.order, status: :ok
     else
@@ -22,5 +22,10 @@ class MessagesController < ApplicationController
   def create_params
     params.require(:body)
     params.permit(:body, :subject_token, :chat_order)
+  end
+
+  def update_params
+    params.require(:body)
+    params.permit(:body, :subject_token, :chat_order, :order)
   end
 end

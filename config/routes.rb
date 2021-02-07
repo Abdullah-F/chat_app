@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   resources :subjects, only: [:create], param: :token do
     resources :chats, only: [:create], param: :order do
-      resources :messages, only: [:create, :update]
+      resources :messages, only: [:create, :update], param: :order
     end
   end
 end

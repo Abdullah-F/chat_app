@@ -17,6 +17,15 @@ class MessagesController < ApplicationController
     end
   end
 
+  def destroy
+    result = Messages::Destroy.execute(params)
+    if result.success?
+      render json: result.order, status: :ok
+    else
+      render json: result.error, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def create_params

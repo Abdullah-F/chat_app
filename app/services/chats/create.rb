@@ -29,7 +29,7 @@ module Chats
     def create_chat_async(order)
       ChatWorker.perform_async({
         command: :create_chat,
-        payload: { order: order, subject_token: token }
+        payload: @params.merge(order: order)
       })
     end
   end

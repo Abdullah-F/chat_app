@@ -13,21 +13,5 @@ module Messages
         payload: @params
       })
     end
-
-    def token
-      @params[:subject_token]
-    end
-
-    def chat_order
-      @params[:chat_order]
-    end
-
-    def order
-      @params[:order]
-    end
-
-    def body
-      @params[:body]
-    end
   end
 end

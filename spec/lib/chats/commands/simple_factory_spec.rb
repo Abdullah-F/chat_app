@@ -10,5 +10,13 @@ RSpec.describe Chats::Commands::SimpleFactory do
         expect(command).to be_a(Chats::Commands::CreateChat)
       end
     end
+    context 'when destroy_chat command is given' do
+      it 'returns destroy_chat command' do
+        command = described_class.create_command({
+          'command' => 'destroy_chat', 'payload' => {}
+        })
+        expect(command).to be_a(Chats::Commands::DestroyChat)
+      end
+    end
   end
 end

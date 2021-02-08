@@ -10,7 +10,11 @@ module Messages
     def destroy_message_async
       ChatWorker.perform_async({
         command: :destroy_message,
-        payload: @params
+        payload: {
+          subject_token: @params[:subject_token],
+          chat_order: @params[:chat_order],
+          order: @params[:order],
+        }
       })
     end
   end

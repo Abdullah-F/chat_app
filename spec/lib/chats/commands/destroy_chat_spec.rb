@@ -5,10 +5,11 @@ RSpec.describe Chats::Commands::DestroyChat do
     let(:topic) { create(:subject, token: SecureRandom.uuid) }
 
     context 'when given valid params' do
+      let(:chat_order) { 1 }
       let(:params) do
-        { subject_token: topic.token, order: 1}
+        { subject_token: topic.token, order: chat_order }
       end
-      before { create(:chat, subject: topic, order: 1) }
+      before { create(:chat, subject: topic, order: chat_order ) }
 
       it 'destroys a chat' do
         expect {

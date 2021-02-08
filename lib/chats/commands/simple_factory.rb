@@ -7,6 +7,8 @@ module Chats
           return CreateChat.new(params.fetch('payload'))
         when 'destroy_chat'
           return DestroyChat.new(params.fetch('payload'))
+        when 'create_message'
+          return CreateMessage.new(params.fetch('payload'))
         end
       end
     end

@@ -11,10 +11,14 @@ module Messages
     private
 
     def fetch_order_from_redis
-      if !RedisClient.exists?(redis_key)
-        RedisClient.set(redis_key, messages_count)
+      if !redis_client.exists?(redis_key)
+        redis_client.set(redis_key, messages_count)
       end
-      RedisClient.incr(redis_key)
+      redis_client.incr(redis_key)
+    end
+
+    def redis_client
+      RedisClient
     end
 
     def redis_key
@@ -40,6 +44,7 @@ module Messages
           subject_token: token,
           chat_order: chat_order,
           order: order,
+          body: @params[:body]
         }
       })
     end

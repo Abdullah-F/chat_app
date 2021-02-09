@@ -9,12 +9,6 @@ module Chats
       private
 
 
-      def pending_commands_in(queue)
-        queue.map do |worker|
-          worker.args.first if relevant_worker?(worker)
-        end.compact
-      end
-
       def relevant_worker?(worker)
         worker.args.first['command'] == 'create_message' &&
           worker.args.first['payload']['subject_token'] == @subject_token &&

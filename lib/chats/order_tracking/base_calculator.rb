@@ -52,6 +52,12 @@ module Chats
           command['payload']['order'].to_i
         end
       end
+
+      def pending_commands_in(queue)
+        queue.map do |worker|
+          worker.args.first if relevant_worker?(worker)
+        end.compact
+      end
     end
   end
 end

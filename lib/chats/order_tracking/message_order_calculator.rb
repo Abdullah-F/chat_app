@@ -1,19 +1,9 @@
 module Chats
   module OrderTracking
-    class MessageOrderCalculator
+    class MessageOrderCalculator < BaseCalculator
       def initialize(params)
         @subject_token = params.fetch(:subject_token)
         @chat_order = params.fetch(:chat_order)
-      end
-
-      def calculate
-        ActiveRecord::Base.transaction do
-          order = fetch_order_from_redis_if_exists
-          return order if order.present?
-          order = fetch_order_from_sidekiq_pending_jobs
-          order = fetch_order_from_db if order == 0
-          set_order_on_redis(order)
-        end
       end
 
       private

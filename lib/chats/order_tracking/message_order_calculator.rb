@@ -9,10 +9,6 @@ module Chats
       private
 
 
-      def fetch_order_from_sidekiq_pending_jobs
-        max(max_order_in(default_queue), max_order_in(retry_set))
-      end
-
       def max(*values)
         values.max
       end

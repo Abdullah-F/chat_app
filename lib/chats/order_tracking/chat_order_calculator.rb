@@ -7,10 +7,6 @@ module Chats
 
       private
 
-      def fetch_order_from_redis_if_exists
-        redis_client.incr(redis_key) if redis_client.exists?(redis_key)
-      end
-
       def fetch_order_from_sidekiq_pending_jobs
         max(max_order_in(default_queue), max_order_in(retry_set))
       end

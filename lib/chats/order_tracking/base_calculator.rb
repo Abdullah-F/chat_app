@@ -18,6 +18,12 @@ module Chats
           set_order_on_redis(order)
         end
       end
+
+      protected
+
+      def fetch_order_from_redis_if_exists
+        redis_client.incr(redis_key) if redis_client.exists?(redis_key)
+      end
     end
   end
 end

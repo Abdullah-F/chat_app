@@ -11,6 +11,8 @@ module Chats
           return CreateMessage.new(params.fetch('payload'))
         when 'destroy_message'
           return DestroyMessage.new(params.fetch('payload'))
+        when 'update_message'
+          return UpdateMessage.new(params.fetch('payload'))
         end
       end
     end

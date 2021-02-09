@@ -18,15 +18,6 @@ module Chats
         subject.chats_count
       end
 
-      def set_order_on_redis(current_order)
-        redis_client.set(redis_key, current_order)
-        redis_client.incr(redis_key)
-      end
-
-      def redis_client
-        RedisClient
-      end
-
       def redis_key
         @subject_token
       end

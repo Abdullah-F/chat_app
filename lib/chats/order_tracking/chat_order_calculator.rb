@@ -7,12 +7,6 @@ module Chats
 
       private
 
-      def command_with_max_order_in(queue)
-        pending_commands_in(queue).max_by do |command|
-          command['payload']['order'].to_i
-        end
-      end
-
       def pending_commands_in(queue)
         queue.map do |worker|
           worker.args.first if relevant_worker?(worker)

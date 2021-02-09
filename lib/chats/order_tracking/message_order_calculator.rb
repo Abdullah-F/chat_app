@@ -9,10 +9,6 @@ module Chats
       private
 
 
-      def max(*values)
-        values.max
-      end
-
       def retry_set
         Sidekiq::RetrySet.new
       end

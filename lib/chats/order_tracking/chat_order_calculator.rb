@@ -7,10 +7,6 @@ module Chats
 
       private
 
-      def default_queue
-        Sidekiq::Queue.new
-      end
-
       def max_order_in(queue)
         command = command_with_max_order_in(queue)
         return command['payload']['order'].to_i if command.present?

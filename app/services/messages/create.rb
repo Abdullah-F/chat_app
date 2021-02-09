@@ -11,10 +11,13 @@ module Messages
     private
 
     def fetch_order_from_redis
-      if !redis_client.exists?(redis_key)
-        redis_client.set(redis_key, messages_count)
+      return redis_client.incr(redis_key) if redis_client.exists?(redis_key)
+      chat = Chat.find_by!(subject_token: token, order: chat_order)
+      chat.transaction do
+        return redis_client.incr(redis_key) if redis_client.exists?(redis_key)
+        redis_client.set(redis_key, chat.messages_count)
+        redis_client.incr(redis_key)
       end
-      redis_client.incr(redis_key)
     end
 
     def redis_client
@@ -23,10 +26,6 @@ module Messages
 
     def redis_key
       "#{token}:#{chat_order}"
-    end
-
-    def messages_count
-      Chat.find_by!(subject_token: token, order: chat_order).messages_count
     end
 
     def token

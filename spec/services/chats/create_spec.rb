@@ -5,11 +5,10 @@ RSpec.describe Chats::Create, type: :service do
     context 'when not prevousily set in redis' do
       let(:new_chats_count) { 6 }
       let(:topic) do
-        build_stubbed(:subject, chats_count: 5, token: SecureRandom.uuid)
+        create(:subject, chats_count: 5, token: SecureRandom.uuid)
       end
 
       it 'returns 1 as the order of the chat' do
-        expect(Subject).to receive(:find_by).and_return(topic)
         expect(ChatWorker).to receive(:perform_async).with({
           command: :create_chat,
           payload: { order: new_chats_count, subject_token: topic.token }

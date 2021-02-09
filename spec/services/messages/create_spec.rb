@@ -4,7 +4,9 @@ RSpec.describe Messages::Create, type: :service do
   describe '#execute' do
     context 'when not prevousily set in redis' do
       let(:new_messages_count) { 6 }
-      let(:chat) { build_stubbed(:chat, subject_token: "token", messages_count: 5) }
+      let(:chat) do
+        create(:chat, subject_token: "token", messages_count: 5, subject: create(:subject))
+      end
       let(:redis_key) { "#{chat.subject_token}:#{chat.order}" }
       let(:body) { "message body" }
       let(:payload) do
@@ -23,8 +25,6 @@ RSpec.describe Messages::Create, type: :service do
       end
 
       it 'fetchs the order from the database' do
-        expect(Chat).to receive(:find_by!)
-          .with(subject_token: chat.subject_token, order: chat.order).and_return(chat)
         result = described_class.execute(payload.except(:order))
         expect(result).to be_success
         expect(RedisClient.get(redis_key).to_i).to eq(new_messages_count)

@@ -23,7 +23,7 @@ module Chats
         end
       end
 
-      protected
+      private
 
       def local_initialize(params)
         raise NotImplementedError, 'local_initialize must be implemented in child classes'
@@ -74,6 +74,18 @@ module Chats
 
       def redis_client
         RedisClient
+      end
+
+      def relevant_worker?(worker)
+        raise NotImplementedError, 'relevant_worker method must be implemented by child classes'
+      end
+
+      def fetch_order_from_db
+        raise NotImplementedError, 'fetch_order_from_db method must be implemented by child classes'
+      end
+
+      def redis_key
+        raise NotImplementedError, 'redis_key method must be implemented by child classes'
       end
     end
   end

@@ -1,7 +1,7 @@
 module Chats
   class Create < BaseService
     def execute
-      order = Chats::OrderTracking::ChatOrderCalculator.new(subject_token: @params[:subject_token]).calculate
+      order = calculator.calculate
       create_chat_async(order)
       success(order: order)
     rescue ActiveRecord::RecordNotFound => e
@@ -9,6 +9,13 @@ module Chats
     end
 
     private
+
+    def calculator
+      Chats::OrderTracking::BaseCalculator.calculator_for(
+        :chat_order,
+        { subject_token: @params[:subject_token] }
+      )
+    end
 
     def create_chat_async(order)
       ChatWorker.perform_async({

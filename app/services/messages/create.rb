@@ -2,7 +2,7 @@ require 'sidekiq/api'
 module Messages
   class Create < BaseService
     def execute
-      order = Chats::OrderTracking::MessageOrderCalculator.new(subject_token: token, chat_order: chat_order).calculate
+      order = calculator.calculate
       create_message_async(order)
       success(order: order)
     rescue ActiveRecord::RecordNotFound => e
@@ -10,6 +10,13 @@ module Messages
     end
 
     private
+
+    def calculator
+      Chats::OrderTracking::BaseCalculator.calculator_for(
+        :message_order,
+        { subject_token: token, chat_order: chat_order }
+      )
+    end
 
     def token
       @params[:subject_token]

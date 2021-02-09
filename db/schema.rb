@@ -19,14 +19,16 @@ ActiveRecord::Schema.define(version: 2021_02_06_170447) do
     t.datetime "updated_at", null: false
     t.integer "messages_count", default: 0, null: false
     t.index ["order", "subject_token"], name: "index_chats_on_order_and_subject_token", unique: true
+    t.index ["subject_token"], name: "fk_rails_eeacd2feab"
   end
 
   create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "order", null: false
-    t.integer "chat_id", null: false
+    t.bigint "chat_id"
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["chat_id"], name: "index_messages_on_chat_id"
     t.index ["order", "chat_id"], name: "index_messages_on_order_and_chat_id", unique: true
   end
 
@@ -39,4 +41,6 @@ ActiveRecord::Schema.define(version: 2021_02_06_170447) do
     t.index ["token"], name: "index_subjects_on_token", unique: true
   end
 
+  add_foreign_key "chats", "subjects", column: "subject_token", primary_key: "token"
+  add_foreign_key "messages", "chats"
 end

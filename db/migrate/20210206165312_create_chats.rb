@@ -6,6 +6,7 @@ class CreateChats < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
+    add_foreign_key :chats, :subjects, column: :subject_token, primary_key: :token
     add_index :chats, [:order, :subject_token], unique: true
   end
 end

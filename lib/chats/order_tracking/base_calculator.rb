@@ -1,12 +1,8 @@
 module Chats
   module OrderTracking
     class BaseCalculator
-      def self.calculator_for(type, params)
-        if type == :message_order
-          MessageOrderCalculator.new(params)
-        elsif type == :chat_order
-          ChatOrderCalculator.new(params)
-        end
+      def initialize(params)
+        local_initialize(params)
       end
 
       def calculate
@@ -19,7 +15,19 @@ module Chats
         end
       end
 
+      def self.calculator_for(type, params)
+        if type == :message_order
+          MessageOrderCalculator.new(params)
+        elsif type == :chat_order
+          ChatOrderCalculator.new(params)
+        end
+      end
+
       protected
+
+      def local_initialize(params)
+        raise NotImplementedError, 'local_initialize must be implemented in child classes'
+      end
 
       def fetch_order_from_redis_if_exists
         redis_client.incr(redis_key) if redis_client.exists?(redis_key)

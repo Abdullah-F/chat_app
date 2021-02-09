@@ -1,7 +1,7 @@
 module Chats
   module OrderTracking
     class MessageOrderCalculator < BaseCalculator
-      def initialize(params)
+      def local_initialize(params)
         @subject_token = params.fetch(:subject_token)
         @chat_order = params.fetch(:chat_order)
       end

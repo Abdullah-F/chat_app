@@ -9,10 +9,6 @@ module Chats
       private
 
 
-      def retry_set
-        Sidekiq::RetrySet.new
-      end
-
       def default_queue
         Sidekiq::Queue.new
       end

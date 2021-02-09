@@ -1,3 +1,4 @@
+require 'sidekiq/api'
 module Chats
   module OrderTracking
     class BaseCalculator

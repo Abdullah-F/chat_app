@@ -1,4 +1,3 @@
-require 'sidekiq/api'
 module Messages
   class Create < BaseService
     def execute

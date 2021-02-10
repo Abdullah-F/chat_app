@@ -78,7 +78,7 @@ module Chats
       end
 
       def relevant_worker?(worker)
-        raise NotImplementedError, 'relevant_worker method must be implemented by child classes'
+        raise NotImplementedError, 'relevant_worker? method must be implemented by child classes'
       end
 
       def fetch_order_from_db

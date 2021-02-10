@@ -14,9 +14,9 @@ RSpec.describe Chats::Commands::DestroyMessage do
       let(:message_order) { 1 }
       let(:params) do
         {
-          'chat_order'=> chat.order,
-          'subject_token'=> chat.subject_token,
-          'order'=> message_order,
+          chat_order: chat.order,
+          subject_token: chat.subject_token,
+          order: message_order,
         }
       end
       let(:chat){ create(:chat, subject: create(:subject)) }

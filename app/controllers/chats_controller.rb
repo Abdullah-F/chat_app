@@ -17,8 +17,16 @@ class ChatsController < ApplicationController
     end
   end
 
+  def search
+    result = Chats::Search.new(params).execute
+    render json: messages_json(result.records), status: :ok
+	end
+
   def show
-    chat = Chat.eager_load(:messages).find_by!(subject_token: params[:subject_token], order: params[:order])
+    chat = Chat.eager_load(:messages).find_by!(
+      subject_token: params[:subject_token],
+      order: params[:order]
+    )
     render json: chat_with_messages_json(chat), status: :ok
   end
 
@@ -26,6 +34,10 @@ class ChatsController < ApplicationController
 
   def chat_with_messages_json(chat)
     chat.as_json(except:['id'])
-      .merge(messages: chat.messages.map{ |m| m.as_json(except: ['id']) })
+      .merge(messages: messages_json(chat.messages))
+  end
+
+  def messages_json(messages)
+    messages.map{ |m| m.as_json(except: [:id, :chat_id]) }
   end
 end

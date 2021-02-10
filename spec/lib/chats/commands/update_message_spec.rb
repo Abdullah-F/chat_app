@@ -13,10 +13,10 @@ RSpec.describe Chats::Commands::UpdateMessage do
     context 'when chat is found' do
       let(:params) do
         {
-          'chat_order'=> chat.order,
-          'subject_token'=> chat.subject_token,
-          'order'=> message.order,
-          'body' => 'updated_body'
+          chat_order: chat.order,
+          subject_token: chat.subject_token,
+          order: message.order,
+          body: 'updated_body'
         }
       end
       let(:chat){ create(:chat, subject: create(:subject)) }
@@ -26,7 +26,7 @@ RSpec.describe Chats::Commands::UpdateMessage do
 
       it 'updates a message' do
         described_class.new(params).execute
-        expect(message.reload.body).to eq(params['body'])
+        expect(message.reload.body).to eq(params[:body])
       end
     end
   end

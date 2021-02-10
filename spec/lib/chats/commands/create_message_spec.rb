@@ -15,9 +15,9 @@ RSpec.describe Chats::Commands::CreateMessage do
       it 'raises active_record error' do
         expect do
           described_class.new(
-            'chat_order'=> chat.order,
-            'subject_token'=> chat.subject_token,
-            'body'=> "message body",
+            chat_order: chat.order,
+            subject_token: chat.subject_token,
+            body: "message body",
           ).execute
         end.to raise_error(ActiveRecord::NotNullViolation)
       end
@@ -28,10 +28,10 @@ RSpec.describe Chats::Commands::CreateMessage do
       it 'creates a message' do
         expect do
           described_class.new(
-            'chat_order'=> chat.order,
-            'subject_token'=> chat.subject_token,
-            'order'=> 1,
-            'body'=> "message body",
+            chat_order: chat.order,
+            subject_token: chat.subject_token,
+            order: 1,
+            bouy: "message body",
           ).execute
         end.to change(Message, :count).by(1)
       end

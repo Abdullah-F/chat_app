@@ -7,8 +7,8 @@ module Chats
 
       def execute
         Message.create!(
-          body: @params['body'],
-          order: @params['order'],
+          body: @params[:body],
+          order: @params[:order],
           chat: chat
         )
       end
@@ -17,8 +17,8 @@ module Chats
 
       def chat
         Chat.find_by!(
-          subject_token: @params['subject_token'],
-          order: @params['chat_order']
+          subject_token: @params[:subject_token],
+          order: @params[:chat_order]
         )
       end
     end

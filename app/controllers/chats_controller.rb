@@ -1,4 +1,6 @@
 class ChatsController < ApplicationController
+  # was lazy to seriously Serialze the responses using a library, so I accepted
+  # this simple manual searliaztion I did for the sake of this task, which is NOT DRY of course.
   def create
     result = Chats::Create.execute(params)
     if result.success?

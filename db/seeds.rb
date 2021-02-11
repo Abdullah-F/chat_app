@@ -1,4 +1,4 @@
-range = (1..10)
+range = (1..5)
 
 def create_messages(range, chat)
   range.each do |message_number|

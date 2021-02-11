@@ -32,6 +32,10 @@ Keep an eye on this repo, as when I learn Go, or Elixir I will be writing a new 
 
 ### Further Imporvements to the current stack
   Using Go, or Elixir, plush adding a Queue server for communicating with the Go app.
+### Further Improvements to the app.
+  No serializtion currently done nor pagination. so futher adding draper, active_model_searilazer or any better alternative will an option to provide 
+  serilazation out of the box and remove the none DRY current serialzation which is currently fine for the app size.
+  Adding authentication and enriching the app with other features would be the next step as needed.
 
 the application is composed of there main entities `subject` which has many `chats` which in turn has many `messages`
 

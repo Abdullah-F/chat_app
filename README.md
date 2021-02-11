@@ -36,7 +36,7 @@ Keep an eye on this repo, as when I learn Go, or Elixir I will be writing a new 
 the application is composed of there main entities `subject` which has many `chats` which in turn has many `messages`
 
 ## Api end points:
-No authentication is made yet in the app so you can try `GET` requests in the browser directy, and use `curel` for other requests.
+No authentication is made yet in the app so you can try `GET` requests in the browser directy, and use [curl](https://curl.se/docs/manpage.html) for other requests.
 * `GET    /subjects` for retriving the subjects from the api (no pagination yet is done in the app)
 * `POST   /subjects` for creating subjects, the returned response will be a json object containing the token.
 * `POST   /subjects/:subject_token/chats` for creating a chat in a specific topic. The order of the chat will be returned and same applies when creating messages.

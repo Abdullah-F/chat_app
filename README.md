@@ -8,7 +8,10 @@ In order to get the app running follow the steps listed below:
 * after cloning open the terminal, run `cd chat_app`
 * after being in the repo directory in your machine run `docker-compose up`
 * the app should be running on [http://localhost:5000/](http://localhost:5000/)
-
+* run `docker container exec -it chat_app_api_1 /bin/bash` in a new window.
+* run `rails db:setup` to create the databases and seed.
+* the app has seeds to help you test manually (see sections below)
+* if you needed to reindex the messages table run `rails c` then `Messages.reindex` (you can also use `searchkick` tasks out of the console)
 ## Stack Used in this Demo and the why behind it.
 ### Stack Used:
 * Ruby On Rails for the apis.
@@ -42,7 +45,7 @@ the application is composed of there main entities `subject` which has many `cha
 ## Api end points:
 No authentication is made yet in the app so you can try `GET` requests in the browser directy, and use [curl](https://curl.se/docs/manpage.html) for other requests.
 * `GET    /subjects` for retriving the subjects from the api (no pagination yet is done in the app)
-* `POST   /subjects` for creating subjects, the returned response will be a json object containing the token.
+* `POST   /subjects` for creating subjects, the returned response will be a json object containing the token. you have to send the subject name in the payload.
 * `POST   /subjects/:subject_token/chats` for creating a chat in a specific topic. The order of the chat will be returned and same applies when creating messages.
 * `GET    /subjects/:subject_token/chats/:order` for showing a chat in a subject using its order (its number in the subject it belongs to)
 * `DELETE /subjects/:subject_token/chats/:order` for deletig a specific chat.
